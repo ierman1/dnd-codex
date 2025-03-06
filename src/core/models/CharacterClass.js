@@ -34,8 +34,4 @@ export default class CharacterClass {
 
     this._level = level
   }
-
-  toString = () => {
-    return `${this.name} ${this.level}`
-  }
 }
