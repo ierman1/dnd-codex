@@ -20,7 +20,7 @@ export default {
 </script>
 <template>
   <!-- CHARACTER BASIC DATA -->
-  <CharacterSheetSection title="Basic data">
+  <CharacterSheetSection>
     <input
       type="text"
       v-model="character.name"
@@ -38,6 +38,9 @@ export default {
 
   <!-- CHARACTER STATS -->
   <CharacterSheetSection title="Stats"> </CharacterSheetSection>
+
+  <!-- CHARACTER STATS -->
+  <CharacterSheetSection title="Skills"> </CharacterSheetSection>
 
   <!-- CHARACTER CLASSES -->
   <CharacterSheetSection title="Classes">

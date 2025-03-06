@@ -3,10 +3,11 @@ import { useQuery } from '@vue/apollo-composable'
 import SearchBox from '../SearchBox.vue'
 import gql from 'graphql-tag'
 import { computed, inject, ref } from 'vue'
+import ClassItem from './ClassItem.vue'
 
 export default {
   name: 'ClassList',
-  components: { SearchBox },
+  components: { SearchBox, ClassItem },
   setup() {
     const searchTerm = ref('')
 
@@ -42,20 +43,19 @@ export default {
 }
 </script>
 <template>
-  <div class="p-1 columns-2">
-    <div v-for="characterClass in characterClasses" :key="characterClass.name" class="border-1 p-3">
-      <h3>
-        <span class="text-2xl">{{ characterClass.name }}</span>
-        <span class="text-xl">Level {{ characterClass.level }}</span>
-      </h3>
-    </div>
-  </div>
   <SearchBox
-    label="Class"
+    label="Add a new class"
     :items="searchedClasses"
     :loading="loading"
     item-identifier="name"
     v-model="searchTerm"
     @selecting-item="addClass"
   />
+  <div class="mt-3">
+    <ClassItem
+      v-for="characterClass in characterClasses"
+      :key="characterClass.name"
+      :character-class="characterClass"
+    />
+  </div>
 </template>
