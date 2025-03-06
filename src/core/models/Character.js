@@ -83,7 +83,7 @@ export default class Character {
 
   get level() {
     if (this.classes.length > 0) {
-      return this.classes.reduce((accumulator, current) => accumulator + current.level)
+      return this.classes.reduce((sum, current) => sum + current.level, 0)
     }
 
     return 0
