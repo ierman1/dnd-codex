@@ -1,11 +1,16 @@
 <script>
-import { reactive } from 'vue'
+import { provide, reactive } from 'vue'
 import Character from '@/core/models/Character'
+import ClassList from './ClassList.vue'
+import CharacterSheetSection from './CharacterSheetSection.vue'
 
 export default {
   name: 'CharacterSheet',
+  components: { ClassList, CharacterSheetSection },
   setup() {
     const character = reactive(new Character())
+
+    provide('character', character)
 
     return {
       character,
@@ -14,7 +19,8 @@ export default {
 }
 </script>
 <template>
-  <div class="m-3 p-3 border-1">
+  <!-- CHARACTER BASIC DATA -->
+  <CharacterSheetSection title="Basic data">
     <input
       type="text"
       v-model="character.name"
@@ -28,5 +34,13 @@ export default {
       class="border-0 border-b-1 outline-0 text-lg"
     />
     <span class="text-lg">Level {{ character.level }}</span>
-  </div>
+  </CharacterSheetSection>
+
+  <!-- CHARACTER STATS -->
+  <CharacterSheetSection title="Stats"> </CharacterSheetSection>
+
+  <!-- CHARACTER CLASSES -->
+  <CharacterSheetSection title="Classes">
+    <ClassList />
+  </CharacterSheetSection>
 </template>
