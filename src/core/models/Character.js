@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-private-class-members */
 
+import { reactive } from 'vue'
 import CharacterClass from './CharacterClass'
 import Charisma from './Charisma'
 import Constitution from './Constitution'
@@ -19,7 +20,7 @@ export default class Character {
   _skills
 
   constructor() {
-    this._classes = []
+    this._classes = reactive([])
 
     this._statblock = {
       STR: new Strength(),
