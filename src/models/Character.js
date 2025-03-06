@@ -11,13 +11,16 @@ import Wisdom from './Wisdom'
 export default class Character {
   static MAX_LEVEL = 20
 
-  _statblock
-  _skills
-  _classes
   _name
+  _species
+  _classes
+  _statblock
   _proficency
+  _skills
 
   constructor() {
+    this._classes = []
+
     this._statblock = {
       STR: new Strength(),
       DEX: new Dexterity(),
@@ -46,11 +49,19 @@ export default class Character {
   }
 
   set name(name) {
-    if (!name) {
-      throw new Error("The character name can't be empty.")
-    }
-
     this._name = name
+  }
+
+  /**
+   * Character species
+   */
+
+  get species() {
+    return this._species
+  }
+
+  set species(species) {
+    this._species = species
   }
 
   /**
@@ -58,10 +69,10 @@ export default class Character {
    */
 
   get classes() {
-    return this.classes
+    return this._classes
   }
 
-  set #classesSetter(classes) {
+  set #classes(classes) {
     if (typeof classes !== 'object') {
       throw new Error('The attribute classes must be an array of Character class.')
     }
@@ -70,7 +81,11 @@ export default class Character {
   }
 
   get level() {
-    return this.classes.reduce((accumulator, current) => accumulator + current.level)
+    if (this.classes.length > 0) {
+      return this.classes.reduce((accumulator, current) => accumulator + current.level)
+    }
+
+    return 0
   }
 
   /**
@@ -86,6 +101,18 @@ export default class Character {
     }
 
     this.classes.push(new CharacterClass(name, level))
+  }
+
+  /**
+   * Character stats
+   */
+
+  get statblock() {
+    return this._statblock
+  }
+
+  set #statblock(statblock) {
+    this._statblock = statblock
   }
 
   /**
@@ -105,14 +132,14 @@ export default class Character {
   }
 
   /**
-   * Character stats
+   * Character skills
    */
 
-  get statblock() {
-    return this._statblock
+  get skills() {
+    return this._skills
   }
 
-  set statblock(statblock) {
-    this._statblock = statblock
+  set #skills(skills) {
+    this._skills = skills
   }
 }

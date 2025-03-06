@@ -1,7 +1,10 @@
 export default class CharacterClass {
+  _name
+  _level
+
   constructor(name, level = 1) {
-    this.name = name
-    this.level = level
+    this._name = name
+    this._level = level
   }
 
   /**
@@ -9,15 +12,11 @@ export default class CharacterClass {
    */
 
   get name() {
-    return this.name
+    return this._name
   }
 
   set name(name) {
-    if (!name) {
-      throw new Error("The class name can't be empty.")
-    }
-
-    this.name = name
+    this._name = name
   }
 
   /**
@@ -25,7 +24,7 @@ export default class CharacterClass {
    */
 
   get level() {
-    return this.level
+    return this._level
   }
 
   set level(level) {
@@ -33,7 +32,7 @@ export default class CharacterClass {
       throw new Error('Level must be between 1 and 20.')
     }
 
-    this.level = level
+    this._level = level
   }
 
   toString = () => {
