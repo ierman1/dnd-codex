@@ -8,6 +8,11 @@ export default {
       type: String,
       required: true,
     },
+    placeholder: {
+      type: String,
+      required: false,
+      default: '',
+    },
     loading: {
       required: false,
       default: false,
@@ -55,11 +60,12 @@ export default {
 </script>
 <template>
   <div class="relative">
-    <span>{{ label }}</span>
+    <span class="inline-block font-bold mb-1">{{ label }}</span>
     <input
       type="text"
-      class="block border-0 border-b-1 outline-0 w-100"
+      class="block border-1 rounded-sm p-3 outline-0 w-100"
       :value="modelValue"
+      :placeholder="placeholder"
       @focusin="showDropdown"
       @focusout="hideDropdown"
       @keyup.enter="selectItem(modelValue)"
