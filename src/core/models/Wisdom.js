@@ -3,8 +3,8 @@ import AbilityScore from './AbilityScore'
 export default class Wisdom extends AbilityScore {
   static slug = 'WIS'
 
-  constructor(level = 1) {
-    super('Wisdom')
+  constructor(character, level = 1) {
+    super('Wisdom', character)
     this.level = level
   }
 

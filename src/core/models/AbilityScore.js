@@ -1,12 +1,18 @@
+/* eslint-disable no-unused-private-class-members */
+import SavingThrow from './SavingThrow'
 import SkillScore from './SkillScore'
 
 export default class AbilityScore {
   _name
+  _character
   _score
+  _savingThrow
 
-  constructor(name, score = 1) {
+  constructor(name, character, score = 1) {
     this._name = name
+    this._character = character
     this._score = score
+    this._savingThrow = new SavingThrow(character, this)
   }
 
   /**
@@ -15,6 +21,18 @@ export default class AbilityScore {
 
   get name() {
     return this._name
+  }
+
+  /**
+   * Character bound
+   */
+
+  get character() {
+    return this._character
+  }
+
+  set #character(character) {
+    this._character = character
   }
 
   /**
@@ -30,6 +48,18 @@ export default class AbilityScore {
   }
 
   /**
+   * Saving throw
+   */
+
+  get savingThrow() {
+    return this._savingThrow
+  }
+
+  set #savingThrow(savingThrow) {
+    this._savingThrow = savingThrow
+  }
+
+  /**
    * Ability modifier
    */
 
@@ -40,13 +70,11 @@ export default class AbilityScore {
   /**
    * Generates an array of skills related to this ability score.
    *
-   * @param {Character} character
-   *
    * @returns array
    */
-  generateSkills = (character) => {
+  generateSkills = () => {
     return this.constructor
       .skillsRelated()
-      .map((skillName) => new SkillScore(skillName, character, this))
+      .map((skillName) => new SkillScore(skillName, this.character, this))
   }
 }

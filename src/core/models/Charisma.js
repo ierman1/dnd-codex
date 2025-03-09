@@ -3,8 +3,8 @@ import AbilityScore from './AbilityScore'
 export default class Charisma extends AbilityScore {
   static slug = 'CHA'
 
-  constructor(level = 1) {
-    super('Charisma')
+  constructor(character, level = 1) {
+    super('Charisma', character)
     this.level = level
   }
 

@@ -26,21 +26,21 @@ export default class Character {
     this._classes = reactive([])
 
     this._statblock = {
-      STR: new Strength(),
-      DEX: new Dexterity(),
-      INT: new Intelligence(),
-      WIS: new Wisdom(),
-      CHA: new Charisma(),
-      CON: new Constitution(),
+      STR: new Strength(this),
+      DEX: new Dexterity(this),
+      INT: new Intelligence(this),
+      WIS: new Wisdom(this),
+      CHA: new Charisma(this),
+      CON: new Constitution(this),
     }
 
     this._skills = reactive([
-      ...this.statblock.STR.generateSkills(this),
-      ...this.statblock.DEX.generateSkills(this),
-      ...this.statblock.INT.generateSkills(this),
-      ...this.statblock.WIS.generateSkills(this),
-      ...this.statblock.CHA.generateSkills(this),
-      ...this.statblock.CON.generateSkills(this),
+      ...this.statblock.STR.generateSkills(),
+      ...this.statblock.DEX.generateSkills(),
+      ...this.statblock.INT.generateSkills(),
+      ...this.statblock.WIS.generateSkills(),
+      ...this.statblock.CHA.generateSkills(),
+      ...this.statblock.CON.generateSkills(),
     ])
   }
 
