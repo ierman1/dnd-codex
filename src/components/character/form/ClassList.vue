@@ -1,5 +1,5 @@
 <script>
-import SearchBox from './SearchBox.vue'
+import SearchBox from '../SearchBox.vue'
 import { computed, inject, ref } from 'vue'
 import ClassItem from './ClassItem.vue'
 import CharacterClass from '@/core/models/CharacterClass'

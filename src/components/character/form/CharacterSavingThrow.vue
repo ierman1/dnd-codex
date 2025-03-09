@@ -1,6 +1,6 @@
 <script>
 import { computed, inject } from 'vue'
-import ScoreModifier from './ScoreModifier.vue'
+import ScoreModifier from '../ScoreModifier.vue'
 
 export default {
   name: 'CharacterSavingThrow',

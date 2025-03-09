@@ -1,5 +1,5 @@
 <script>
-import CharacterSheet from '@/components/character/CharacterSheet.vue'
+import CharacterSheet from '@/components/character/form/CharacterSheet.vue'
 
 export default {
   name: 'CharacterView',

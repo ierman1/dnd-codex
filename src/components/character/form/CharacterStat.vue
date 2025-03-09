@@ -1,7 +1,7 @@
 <script>
 import { inject } from 'vue'
 import CharacterSkillList from './CharacterSkillList.vue'
-import ScoreModifier from './ScoreModifier.vue'
+import ScoreModifier from '../ScoreModifier.vue'
 import CharacterSavingThrow from './CharacterSavingThrow.vue'
 
 export default {
