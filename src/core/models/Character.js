@@ -8,7 +8,6 @@ import Dexterity from './Dexterity'
 import Intelligence from './Intelligence'
 import Strength from './Strength'
 import Wisdom from './Wisdom'
-import SkillScore from './SkillScore'
 
 export default class Character {
   static MAX_LEVEL = 20

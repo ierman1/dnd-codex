@@ -50,6 +50,12 @@ export default {
       placeholder="Species"
       class="border-0 border-b-1 outline-0 text-lg"
     />
+    <input
+      type="number"
+      v-model="character.proficencyBonus"
+      placeholder="Proficency bonus"
+      class="border-1 outline-0 text-lg rounded-sm w-12 text-center"
+    />
     <span class="text-lg">Level {{ character.level }}</span>
   </CharacterSheetSection>
 
