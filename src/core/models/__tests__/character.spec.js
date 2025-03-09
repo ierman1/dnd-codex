@@ -20,6 +20,8 @@ test('Modifying character classes updates the global level correctly', () => {
   expect(character.classes.length).toBe(1)
   expect(character.level).toBe(6)
 
+  expect(() => character.addClass('Paladin')).toThrowError('more than once')
+
   character.addClass('Monk', 2)
 
   expect(character.classes.length).toBe(2)

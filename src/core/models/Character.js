@@ -8,6 +8,7 @@ import Dexterity from './Dexterity'
 import Intelligence from './Intelligence'
 import Strength from './Strength'
 import Wisdom from './Wisdom'
+import SkillScore from './SkillScore'
 
 export default class Character {
   static MAX_LEVEL = 20
@@ -93,6 +94,16 @@ export default class Character {
   }
 
   /**
+   * Finds and returns a class in the array.
+   *
+   * @param {String} className
+   * @returns {CharacterClass}
+   */
+  findClass = (className) => {
+    return this.classes.find((characterClass) => characterClass.name === className)
+  }
+
+  /**
    * Adds a new class to the character. Throws an error if the total
    * level is greater than 20.
    *
@@ -102,6 +113,10 @@ export default class Character {
   addClass = (name, level = 1) => {
     if (level > Character.MAX_LEVEL) {
       throw new Error(`Class level can't be greater than ${Character.MAX_LEVEL}.`)
+    }
+
+    if (this.findClass(name)) {
+      throw new Error(`Classes can't be added more than once.`)
     }
 
     if (this.level + level > Character.MAX_LEVEL) {
@@ -155,7 +170,7 @@ export default class Character {
    * Returns a skill by its name.
    *
    * @param {String} skillName
-   * @returns
+   * @returns {SkillScore}
    */
   findSkill = (skillName) => {
     return this.skills.find((skill) => skill.name === skillName)
