@@ -2,10 +2,11 @@
 import { inject } from 'vue'
 import CharacterSkillList from './CharacterSkillList.vue'
 import ScoreModifier from './ScoreModifier.vue'
+import CharacterSavingThrow from './CharacterSavingThrow.vue'
 
 export default {
   name: 'CharacterStat',
-  components: { CharacterSkillList, ScoreModifier },
+  components: { CharacterSavingThrow, CharacterSkillList, ScoreModifier },
   props: {
     statSlug: {
       type: String,
@@ -34,9 +35,7 @@ export default {
       />
       <ScoreModifier :number="stat.modifier" size="lg" />
     </div>
-    <div class="border-b-1 py-3">
-      <span class="font-bold">Saving throw:</span>
-    </div>
+    <CharacterSavingThrow :stat="stat" />
     <CharacterSkillList :stat="stat" />
   </div>
 </template>
