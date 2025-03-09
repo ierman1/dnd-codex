@@ -54,7 +54,7 @@ export default {
   </CharacterSheetSection>
 
   <!-- CHARACTER STATS -->
-  <div class="flex p-3">
+  <div class="flex m-3 mb-0">
     <CharacterStat v-for="stat in stats" :key="stat" :stat-slug="stat" />
   </div>
 

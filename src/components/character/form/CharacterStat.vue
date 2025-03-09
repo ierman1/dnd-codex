@@ -24,7 +24,7 @@ export default {
 }
 </script>
 <template>
-  <div class="p-3 border-1 flex-1">
+  <div class="p-3 border-1 flex-1 mx-1 first:ml-0 last:mr-0">
     <h2 class="text-3xl font-bold mb-3">{{ stat.name }}</h2>
     <div class="border-b-1 py-3">
       <input
