@@ -40,12 +40,13 @@ export default class AbilityScore {
   /**
    * Generates an array of skills related to this ability score.
    *
+   * @param {Character} character
+   *
    * @returns array
    */
-  static generateSkills() {
-    if (typeof this.skillsRelated !== 'function') {
-      throw new Error(`${this.name} must implement a static skillsRelated method`)
-    }
-    return this.skillsRelated().map((skillName) => new SkillScore(skillName))
+  generateSkills = (character) => {
+    return this.constructor
+      .skillsRelated()
+      .map((skillName) => new SkillScore(skillName, character, this))
   }
 }

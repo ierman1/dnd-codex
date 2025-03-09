@@ -19,9 +19,10 @@ export default class Character {
   _proficency
   _skills
 
-  constructor() {
-    this.proficencyBonus = 1
-    this.name = ''
+  constructor(name = '', proficencyBonus = 1) {
+    this.proficencyBonus = proficencyBonus
+    this.name = name
+
     this._classes = reactive([])
 
     this._statblock = {
@@ -34,12 +35,12 @@ export default class Character {
     }
 
     this._skills = [
-      ...Strength.generateSkills(),
-      ...Dexterity.generateSkills(),
-      ...Intelligence.generateSkills(),
-      ...Wisdom.generateSkills(),
-      ...Charisma.generateSkills(),
-      ...Constitution.generateSkills(),
+      ...this.statblock.STR.generateSkills(this),
+      ...this.statblock.DEX.generateSkills(this),
+      ...this.statblock.INT.generateSkills(this),
+      ...this.statblock.WIS.generateSkills(this),
+      ...this.statblock.CHA.generateSkills(this),
+      ...this.statblock.CON.generateSkills(this),
     ]
   }
 
@@ -148,5 +149,15 @@ export default class Character {
 
   set #skills(skills) {
     this._skills = skills
+  }
+
+  /**
+   * Returns a skill by its name.
+   *
+   * @param {String} skillName
+   * @returns
+   */
+  findSkill = (skillName) => {
+    return this.skills.find((skill) => skill.name === skillName)
   }
 }

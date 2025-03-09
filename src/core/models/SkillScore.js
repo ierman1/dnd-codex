@@ -1,6 +1,15 @@
+/* eslint-disable no-unused-private-class-members */
 export default class SkillScore {
-  constructor(name, proficency = false, expertise = false) {
+  _name
+  _character
+  _abilityScore
+  _proficency
+  _expertise
+
+  constructor(name, character, abilityScore, proficency = false, expertise = false) {
     this._name = name
+    this._character = character
+    this._abilityScore = abilityScore
     this._proficency = proficency
     this._expertise = expertise
   }
@@ -15,6 +24,30 @@ export default class SkillScore {
 
   set name(name) {
     this._name = name
+  }
+
+  /**
+   * Character bound
+   */
+
+  get character() {
+    return this._character
+  }
+
+  set #character(character) {
+    this._character = character
+  }
+
+  /**
+   * Stat related
+   */
+
+  get abilityScore() {
+    return this._abilityScore
+  }
+
+  set #abilityScore(abilityScore) {
+    this._abilityScore = abilityScore
   }
 
   /**
@@ -41,5 +74,14 @@ export default class SkillScore {
     if (expertise && !this.proficency) this.proficency = true
 
     this._expertise = expertise
+  }
+
+  /**
+   * Modifier
+   */
+  get modifier() {
+    const multiplier = (this.proficency ? 1 : 0) + (this.expertise ? 1 : 0)
+
+    return this.abilityScore.modifier + this.character.proficencyBonus * multiplier
   }
 }
