@@ -1,9 +1,8 @@
 <script>
-import { useQuery } from '@vue/apollo-composable'
 import SearchBox from './SearchBox.vue'
-import gql from 'graphql-tag'
 import { computed, inject, ref } from 'vue'
 import ClassItem from './ClassItem.vue'
+import CharacterClass from '@/core/models/CharacterClass'
 
 export default {
   name: 'ClassList',
@@ -14,20 +13,7 @@ export default {
     const character = inject('character')
     const characterClasses = computed(() => character.classes)
 
-    const { result, loading } = useQuery(
-      gql`
-        query classes($name: String) {
-          classes(name: $name) {
-            index
-            name
-          }
-        }
-      `,
-      {
-        name: searchTerm,
-      },
-    )
-
+    const { result, loading } = CharacterClass.fetchClasses(searchTerm)
     const searchedClasses = computed(() => result.value?.classes ?? [])
 
     const addClass = (className) => character.addClass(className)
