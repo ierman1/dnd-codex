@@ -34,14 +34,14 @@ export default class Character {
       CON: new Constitution(),
     }
 
-    this._skills = [
+    this._skills = reactive([
       ...this.statblock.STR.generateSkills(this),
       ...this.statblock.DEX.generateSkills(this),
       ...this.statblock.INT.generateSkills(this),
       ...this.statblock.WIS.generateSkills(this),
       ...this.statblock.CHA.generateSkills(this),
       ...this.statblock.CON.generateSkills(this),
-    ]
+    ])
   }
 
   /**
