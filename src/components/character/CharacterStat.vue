@@ -1,0 +1,55 @@
+<script>
+import { inject } from 'vue'
+import CharacterSkillList from './CharacterSkillList.vue'
+import ScoreModifier from './ScoreModifier.vue'
+
+export default {
+  name: 'CharacterStat',
+  components: { CharacterSkillList, ScoreModifier },
+  props: {
+    statSlug: {
+      type: String,
+      required: true,
+    },
+  },
+  setup(props) {
+    const character = inject('character')
+    const stat = character.statblock[props.statSlug]
+
+    return {
+      stat,
+    }
+  },
+}
+</script>
+<template>
+  <div class="p-3 border-1 flex-1">
+    <h2 class="text-3xl font-bold mb-3">{{ stat.name }}</h2>
+    <div class="border-b-1 py-3">
+      <input
+        type="number"
+        class="border-1 p-3 w-12 h-12 text-center"
+        min="1"
+        v-model="stat.score"
+      />
+      <ScoreModifier :number="stat.modifier" size="lg" />
+    </div>
+    <div class="border-b-1 py-3">
+      <span class="font-bold">Saving throw:</span>
+    </div>
+    <CharacterSkillList :stat="stat" />
+  </div>
+</template>
+
+<style scoped>
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type='number'] {
+  -moz-appearance: textfield; /* Firefox */
+}
+</style>

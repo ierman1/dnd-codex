@@ -1,19 +1,36 @@
 <script>
-import { provide, reactive } from 'vue'
+import { provide, reactive, computed } from 'vue'
 import Character from '@/core/models/Character'
 import ClassList from './ClassList.vue'
 import CharacterSheetSection from './CharacterSheetSection.vue'
+import CharacterStat from './CharacterStat.vue'
+
+import Constitution from '@/core/models/Constitution'
+import Strength from '@/core/models/Strength'
+import Dexterity from '@/core/models/Dexterity'
+import Intelligence from '@/core/models/Intelligence'
+import Wisdom from '@/core/models/Wisdom'
+import Charisma from '@/core/models/Charisma'
 
 export default {
   name: 'CharacterSheet',
-  components: { ClassList, CharacterSheetSection },
+  components: { ClassList, CharacterSheetSection, CharacterStat },
   setup() {
     const character = reactive(new Character())
-
     provide('character', character)
+
+    const stats = computed(() => [
+      Constitution.slug,
+      Strength.slug,
+      Dexterity.slug,
+      Intelligence.slug,
+      Wisdom.slug,
+      Charisma.slug,
+    ])
 
     return {
       character,
+      stats,
     }
   },
 }
@@ -37,10 +54,9 @@ export default {
   </CharacterSheetSection>
 
   <!-- CHARACTER STATS -->
-  <CharacterSheetSection title="Stats"> </CharacterSheetSection>
-
-  <!-- CHARACTER STATS -->
-  <CharacterSheetSection title="Skills"> </CharacterSheetSection>
+  <div class="flex p-3">
+    <CharacterStat v-for="stat in stats" :key="stat" :stat-slug="stat" />
+  </div>
 
   <!-- CHARACTER CLASSES -->
   <CharacterSheetSection title="Classes">

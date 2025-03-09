@@ -1,6 +1,6 @@
 <script>
 import { useQuery } from '@vue/apollo-composable'
-import SearchBox from '../SearchBox.vue'
+import SearchBox from './SearchBox.vue'
 import gql from 'graphql-tag'
 import { computed, inject, ref } from 'vue'
 import ClassItem from './ClassItem.vue'

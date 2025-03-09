@@ -1,8 +1,6 @@
 import SkillScore from './SkillScore'
 
 export default class AbilityScore {
-  static MAX_SCORE = 20
-
   _name
   _score
 

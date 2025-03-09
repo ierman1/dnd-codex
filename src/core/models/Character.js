@@ -20,24 +20,25 @@ export default class Character {
   _skills
 
   constructor() {
+    this.proficencyBonus = 1
     this._classes = reactive([])
 
     this._statblock = {
       STR: new Strength(),
       DEX: new Dexterity(),
-      CON: new Constitution(),
       INT: new Intelligence(),
       WIS: new Wisdom(),
       CHA: new Charisma(),
+      CON: new Constitution(),
     }
 
     this._skills = [
       ...Strength.generateSkills(),
       ...Dexterity.generateSkills(),
-      ...Constitution.generateSkills(),
       ...Intelligence.generateSkills(),
       ...Wisdom.generateSkills(),
       ...Charisma.generateSkills(),
+      ...Constitution.generateSkills(),
     ]
   }
 
@@ -120,16 +121,16 @@ export default class Character {
    * Character proficency
    */
 
-  get proficency() {
-    return this._proficency
+  get proficencyBonus() {
+    return this._proficencyBonus
   }
 
-  set proficency(proficency) {
-    if (proficency < 0) {
+  set proficencyBonus(proficencyBonus) {
+    if (proficencyBonus < 0) {
       throw new Error("The character proficency can't be less than 0.")
     }
 
-    this._proficency = proficency
+    this._proficencyBonus = proficencyBonus
   }
 
   /**
