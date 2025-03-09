@@ -21,6 +21,7 @@ export default class Character {
 
   constructor() {
     this.proficencyBonus = 1
+    this.name = ''
     this._classes = reactive([])
 
     this._statblock = {
@@ -98,8 +99,12 @@ export default class Character {
    * @param {Number} level
    */
   addClass = (name, level = 1) => {
-    if (this.level + level > self.MAX_LEVEL) {
-      throw new Error(`Total level of the character can't be greater than ${self.MAX_LEVEL}.`)
+    if (level > Character.MAX_LEVEL) {
+      throw new Error(`Class level can't be greater than ${Character.MAX_LEVEL}.`)
+    }
+
+    if (this.level + level > Character.MAX_LEVEL) {
+      throw new Error(`Total level of the character can't be greater than ${Character.MAX_LEVEL}.`)
     }
 
     this.classes.push(new CharacterClass(name, level))
