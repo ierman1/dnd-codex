@@ -6,7 +6,8 @@ import SearchBox from './SearchBox.vue'
 export default {
   name: 'FormAddClass',
   components: { SearchBox },
-  setup() {
+  emits: ['addingClass'],
+  setup(props, ctx) {
     const character = inject('character')
 
     const searchTerm = ref('')
@@ -26,10 +27,13 @@ export default {
         character.addClass(searchTerm.value, classLevel.value)
       } catch (error) {
         methodError.value = error
+        return
+      } finally {
+        searchTerm.value = ''
+        classLevel.value = 1
       }
 
-      searchTerm.value = ''
-      classLevel.value = 1
+      ctx.emit('addingClass')
     }
     const selectClass = (className) => (searchTerm.value = className)
 
