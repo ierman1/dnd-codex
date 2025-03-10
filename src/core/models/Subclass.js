@@ -1,13 +1,10 @@
-import gql from 'graphql-tag'
-import { useQuery } from '@vue/apollo-composable'
 export default class Subclass {
   _name
   _characterClass
-  _index
 
-  constructor(name, characterClass, index = null) {
+  constructor(name, characterClass) {
     this._name = name
-    this._index = index
+    this._characterClass = characterClass
   }
 
   /**
@@ -32,39 +29,5 @@ export default class Subclass {
 
   set characterClass(characterClass) {
     this._characterClass = characterClass
-  }
-
-  /**
-   * Subclass index
-   */
-
-  get index() {
-    return this._index
-  }
-
-  set index(index) {
-    this._index = index
-  }
-
-  /**
-   * Fetches the subclasses to the API by their name.
-   *
-   * @param {String} name
-   * @returns
-   */
-  static fetchClasses = (name) => {
-    return useQuery(
-      gql`
-        query classes($name: String) {
-          classes(name: $name) {
-            index
-            name
-          }
-        }
-      `,
-      {
-        name,
-      },
-    )
   }
 }

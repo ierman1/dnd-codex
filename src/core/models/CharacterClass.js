@@ -78,9 +78,8 @@ export default class CharacterClass {
    * Adds an instance of a subclass to this class.
    *
    * @param {String} name
-   * @param {String|null} index
    */
-  setSubclass = (name, index = null) => (this.subclass = new Subclass(name, index))
+  setSubclass = (name) => (this.subclass = new Subclass(name, this))
 
   /**
    * Class features
