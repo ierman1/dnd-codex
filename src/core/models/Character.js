@@ -107,22 +107,19 @@ export default class Character {
    * level is greater than 20.
    *
    * @param {String} name
+   * @param {String|null} index
    * @param {Number} level
    */
-  addClass = (name, level = 1) => {
-    if (level > Character.MAX_LEVEL) {
+  addClass = (name, index = null, level = 1) => {
+    if (level > Character.MAX_LEVEL)
       throw new Error(`Class level can't be greater than ${Character.MAX_LEVEL}.`)
-    }
 
-    if (this.findClass(name)) {
-      throw new Error(`Classes can't be added more than once.`)
-    }
+    if (this.findClass(name)) throw new Error(`Classes can't be added more than once.`)
 
-    if (this.level + level > Character.MAX_LEVEL) {
+    if (this.level + level > Character.MAX_LEVEL)
       throw new Error(`Total level of the character can't be greater than ${Character.MAX_LEVEL}.`)
-    }
 
-    this.classes.push(new CharacterClass(name, level))
+    this.classes.push(new CharacterClass(name, index, level))
   }
 
   /**

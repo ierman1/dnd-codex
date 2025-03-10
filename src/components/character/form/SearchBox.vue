@@ -22,23 +22,13 @@ export default {
       required: false,
       default: () => [],
     },
-    itemText: {
-      type: String,
-      required: false,
-      default: 'name',
-    },
-    itemIdentifier: {
-      type: String,
-      required: false,
-      default: 'index',
-    },
-    modelValue: {
+    name: {
       type: String,
       required: true,
       default: '',
     },
   },
-  emits: ['selectingItem', 'update:modelValue'],
+  emits: ['selectingItem', 'update:name'],
   setup(props, ctx) {
     const selectItem = (item) => ctx.emit('selectingItem', item)
 
@@ -49,10 +39,15 @@ export default {
     const showDropdown = () => (dropdownVisible.value = true)
     const hideDropdown = () => setTimeout(() => (dropdownVisible.value = false), 100)
 
+    const updateName = (event) => {
+      ctx.emit('update:name', event.target.value)
+    }
+
     return {
       dropdownVisible,
       showDropdown,
       hideDropdown,
+      updateName,
       selectItem,
     }
   },
@@ -64,12 +59,11 @@ export default {
     <input
       type="text"
       class="block border-1 rounded-sm p-3 outline-0 w-100"
-      :value="modelValue"
+      :value="name"
       :placeholder="placeholder"
       @focusin="showDropdown"
       @focusout="hideDropdown"
-      @keyup.enter="selectItem(modelValue)"
-      @input="$emit('update:modelValue', $event.target.value)"
+      @input="updateName"
     />
     <div
       v-if="dropdownVisible"
@@ -80,11 +74,11 @@ export default {
         <ul v-if="items.length > 0">
           <li
             v-for="item in items"
-            :key="item[itemIdentifier]"
-            @click="selectItem(item[itemIdentifier])"
+            :key="item.index"
+            @click="selectItem({ index: item.index, name: item.name })"
             class="px-3 py-2 hover:bg-blue-100 cursor-pointer rounded-sm"
           >
-            {{ item[itemText] }}
+            {{ item.name }}
           </li>
         </ul>
         <span v-else>No items found.</span>

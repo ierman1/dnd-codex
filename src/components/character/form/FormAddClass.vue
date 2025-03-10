@@ -10,12 +10,14 @@ export default {
   setup(props, ctx) {
     const character = inject('character')
 
-    const searchTerm = ref('')
-    const buttonDisabled = computed(() => !searchTerm.value || !classLevel.value)
+    const className = ref('')
+    const classIndex = ref(null)
+
+    const buttonDisabled = computed(() => !className.value || !classLevel.value)
 
     const classLevel = ref(1)
 
-    const { result, loading } = CharacterClass.fetchClasses(searchTerm)
+    const { result, loading } = CharacterClass.fetchClasses(className)
     const searchedClasses = computed(() => result.value?.classes ?? [])
 
     const methodError = ref('')
@@ -24,22 +26,27 @@ export default {
       methodError.value = null
 
       try {
-        character.addClass(searchTerm.value, classLevel.value)
+        character.addClass(className.value, classIndex.value, classLevel.value)
       } catch (error) {
         methodError.value = error
         return
       } finally {
-        searchTerm.value = ''
+        className.value = ''
+        classIndex.value = null
         classLevel.value = 1
       }
 
       ctx.emit('addingClass')
     }
-    const selectClass = (className) => (searchTerm.value = className)
+    const selectClass = (characterClass) => {
+      className.value = characterClass.name
+      classIndex.value = characterClass.index
+    }
 
     return {
       character,
-      searchTerm,
+      className,
+      classIndex,
       buttonDisabled,
       classLevel,
       searchedClasses,
@@ -58,9 +65,10 @@ export default {
       placeholder="Class name"
       :items="searchedClasses"
       :loading="loading"
-      item-identifier="name"
-      v-model="searchTerm"
+      item-identifier="index"
+      v-model:name="className"
       @selecting-item="selectClass"
+      @update:name="classIndex = null"
     />
     <div class="ml-3">
       <span class="inline-block font-bold mb-1">Level</span>
