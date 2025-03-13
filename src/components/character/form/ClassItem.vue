@@ -1,8 +1,10 @@
 <script>
 import { computed, ref } from 'vue'
+import FeatureList from './FeatureList.vue'
 
 export default {
   name: 'ClassItem',
+  components: { FeatureList },
   props: {
     characterClass: {
       type: Object,
@@ -10,6 +12,9 @@ export default {
     },
   },
   setup(props) {
+    /**
+     * Subclass management
+     */
     const hasSubclass = computed(() => props.characterClass.subclass !== null)
     const buttonDisabled = computed(() => !subclassName.value)
 
@@ -17,11 +22,18 @@ export default {
 
     const setSubclass = () => props.characterClass.setSubclass(subclassName.value)
 
+    /**
+     * Features management
+     */
+    const { result } = props.characterClass.fetchFeatures()
+    const fetchedFeatures = computed(() => result.value?.features ?? [])
+
     return {
       hasSubclass,
       buttonDisabled,
       subclassName,
       setSubclass,
+      fetchedFeatures,
     }
   },
 }
@@ -29,20 +41,17 @@ export default {
 <template>
   <div class="border-1 rounded-sm p-3 first:mt-0 mt-3">
     <!-- CLASS TITLE -->
-    <h3>
+    <h2 class="mb-3">
       <span class="text-2xl font-bold">{{ characterClass.name }}</span>
       <span class="inline-block ml-2 text-xl">Level {{ characterClass.level }}</span>
-    </h3>
+      <span v-if="hasSubclass" class="inline-block ml-2 text-xl">
+        - {{ characterClass.subclass.name }}</span
+      >
+    </h2>
     <!-- END CLASS TITLE -->
 
-    <!-- SUBCLASS DISPLAY -->
-    <div v-if="hasSubclass" class="mt-3">
-      <h4 class="text-xl">{{ characterClass.subclass.name }}</h4>
-    </div>
-    <!-- END SUBCLASS DISPLAY -->
-
     <!-- SUBCLASS FORM -->
-    <div v-else class="mt-3 flex">
+    <div v-if="!hasSubclass" class="my-3 flex">
       <div>
         <span class="inline-block font-bold mb-1">Subclass</span>
         <input
@@ -60,5 +69,12 @@ export default {
       </button>
     </div>
     <!-- END SUBCLASS FORM -->
+
+    <hr />
+
+    <!-- FEATURE LIST -->
+    <div class="mt-3">
+      <FeatureList :features="characterClass.features" :fetched-features="fetchedFeatures" />
+    </div>
   </div>
 </template>

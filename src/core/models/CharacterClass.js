@@ -107,6 +107,35 @@ export default class CharacterClass {
     this.features.push(new Feature(name, description, index))
 
   /**
+   * Fetches the features of this class to the API.
+   *
+   * @returns {Object}
+   */
+  fetchFeatures = () => {
+    if (!this.index) throw new Error("Non-fetched classes don't have default features.")
+
+    return useQuery(
+      gql`
+        query features($class: StringFilter) {
+          features(class: $class) {
+            index
+            name
+            level
+            desc
+          }
+        }
+      `,
+      {
+        class: this.index,
+        order: {
+          by: 'NAME',
+          direction: 'ASCENDING',
+        },
+      },
+    )
+  }
+
+  /**
    * Fetches classes to the API.
    *
    * @returns {Object}
