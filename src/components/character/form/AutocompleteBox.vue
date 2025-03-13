@@ -80,7 +80,7 @@ export default {
     />
     <div
       v-if="dropdownVisible"
-      class="border-1 inline-block p-3 mt-2 rounded-sm w-100 absolute bg-white"
+      class="border-1 inline-block p-3 mt-2 rounded-sm w-100 absolute bg-white max-h-80 overflow-auto z-1"
     >
       <span v-if="loading">Loading...</span>
       <template v-else>
