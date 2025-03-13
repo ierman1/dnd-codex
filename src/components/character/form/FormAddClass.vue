@@ -1,11 +1,11 @@
 <script>
 import { computed, inject, ref } from 'vue'
 import CharacterClass from '@/core/models/CharacterClass'
-import SearchBox from './SearchBox.vue'
+import AutocompleteBox from './AutocompleteBox.vue'
 
 export default {
   name: 'FormAddClass',
-  components: { SearchBox },
+  components: { AutocompleteBox },
   emits: ['addingClass'],
   setup(props, ctx) {
     const character = inject('character')
@@ -17,8 +17,8 @@ export default {
 
     const classLevel = ref(1)
 
-    const { result, loading } = CharacterClass.fetchClasses(className)
-    const searchedClasses = computed(() => result.value?.classes ?? [])
+    const { result, loading } = CharacterClass.fetchClasses()
+    const fetchedClasses = computed(() => result.value?.classes ?? [])
 
     const methodError = ref('')
 
@@ -38,18 +38,17 @@ export default {
 
       ctx.emit('addingClass')
     }
+
     const selectClass = (characterClass) => {
       className.value = characterClass.name
       classIndex.value = characterClass.index
     }
 
     return {
-      character,
       className,
-      classIndex,
       buttonDisabled,
       classLevel,
-      searchedClasses,
+      fetchedClasses,
       loading,
       methodError,
       addClass,
@@ -60,15 +59,13 @@ export default {
 </script>
 <template>
   <div class="py-3 flex">
-    <SearchBox
+    <AutocompleteBox
       label="Add a new class"
       placeholder="Class name"
-      :items="searchedClasses"
+      :items="fetchedClasses"
       :loading="loading"
-      item-identifier="index"
       v-model:name="className"
       @selecting-item="selectClass"
-      @update:name="classIndex = null"
     />
     <div class="ml-3">
       <span class="inline-block font-bold mb-1">Level</span>

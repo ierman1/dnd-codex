@@ -1,8 +1,8 @@
 <script>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 export default {
-  name: 'SearchBox',
+  name: 'AutocompleteBox',
   props: {
     label: {
       type: String,
@@ -30,7 +30,12 @@ export default {
   },
   emits: ['selectingItem', 'update:name'],
   setup(props, ctx) {
-    const selectItem = (item) => ctx.emit('selectingItem', item)
+    const inputValue = ref(props.name)
+
+    const selectItem = (item) => {
+      inputValue.value = item.name
+      ctx.emit('selectingItem', item)
+    }
 
     /**
      * Input focus management
@@ -39,14 +44,22 @@ export default {
     const showDropdown = () => (dropdownVisible.value = true)
     const hideDropdown = () => setTimeout(() => (dropdownVisible.value = false), 100)
 
-    const updateName = (event) => {
-      ctx.emit('update:name', event.target.value)
+    const filteredItems = computed(() =>
+      props.name === ''
+        ? props.items
+        : props.items.filter((item) => item.name.includes(props.name)),
+    )
+
+    const updateName = () => {
+      ctx.emit('update:name', inputValue.value)
     }
 
     return {
+      inputValue,
       dropdownVisible,
       showDropdown,
       hideDropdown,
+      filteredItems,
       updateName,
       selectItem,
     }
@@ -59,7 +72,7 @@ export default {
     <input
       type="text"
       class="block border-1 rounded-sm p-3 outline-0 w-100"
-      :value="name"
+      v-model="inputValue"
       :placeholder="placeholder"
       @focusin="showDropdown"
       @focusout="hideDropdown"
@@ -71,11 +84,11 @@ export default {
     >
       <span v-if="loading">Loading...</span>
       <template v-else>
-        <ul v-if="items.length > 0">
+        <ul v-if="filteredItems.length > 0">
           <li
-            v-for="item in items"
+            v-for="item in filteredItems"
             :key="item.index"
-            @click="selectItem({ index: item.index, name: item.name })"
+            @click="selectItem(item)"
             class="px-3 py-2 hover:bg-blue-100 cursor-pointer rounded-sm"
           >
             {{ item.name }}

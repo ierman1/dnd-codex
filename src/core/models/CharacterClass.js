@@ -107,24 +107,18 @@ export default class CharacterClass {
     this.features.push(new Feature(name, description, index))
 
   /**
-   * Fetches classes to the API by their name.
+   * Fetches classes to the API.
    *
-   * @param {String} name
-   * @returns
+   * @returns {Object}
    */
-  static fetchClasses = (name) => {
-    return useQuery(
-      gql`
-        query classes($name: String) {
-          classes(name: $name) {
-            index
-            name
-          }
+  static fetchClasses = () => {
+    return useQuery(gql`
+      query classes {
+        classes {
+          index
+          name
         }
-      `,
-      {
-        name,
-      },
-    )
+      }
+    `)
   }
 }
