@@ -10,18 +10,24 @@ export default {
   setup(props, ctx) {
     const character = inject('character')
 
-    const className = ref('')
-    const classIndex = ref(null)
-
-    const buttonDisabled = computed(() => !className.value || !classLevel.value)
-
-    const classLevel = ref(1)
-
+    /**
+     * Class fetching
+     */
     const { result, loading } = CharacterClass.fetchClasses()
     const fetchedClasses = computed(() => result.value?.classes ?? [])
 
-    const methodError = ref('')
+    /**
+     * Class parameters
+     */
+    const className = ref('')
+    const classIndex = ref(null)
+    const classLevel = ref(1)
 
+    const buttonDisabled = computed(() => !className.value || !classLevel.value)
+
+    /**
+     * Class management methods
+     */
     const addClass = () => {
       methodError.value = null
 
@@ -38,6 +44,8 @@ export default {
 
       ctx.emit('addingClass')
     }
+
+    const methodError = ref('')
 
     const selectClass = (characterClass) => {
       className.value = characterClass.name
