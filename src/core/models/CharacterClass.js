@@ -2,6 +2,7 @@ import gql from 'graphql-tag'
 import { useQuery } from '@vue/apollo-composable'
 import Subclass from './Subclass'
 import Feature from './Feature'
+import { ref } from 'vue'
 
 export default class CharacterClass {
   _name
@@ -15,7 +16,7 @@ export default class CharacterClass {
     this._index = index
     this._level = level
 
-    this._subclass = null
+    this._subclass = ref(null)
     this._features = []
   }
 
@@ -63,15 +64,15 @@ export default class CharacterClass {
    * Class index
    */
 
-  get subclasses() {
-    return this._subclasses
+  get subclass() {
+    return this._subclass
   }
 
   set subclass(subclass) {
     if (!(subclass instanceof Subclass))
       throw new Error('The subclass must be an instance of Subclass')
 
-    this._subclass = subclass
+    this._subclass.value = subclass
   }
 
   /**
